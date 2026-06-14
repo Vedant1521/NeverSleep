@@ -23,11 +23,11 @@ Here's how NeverSleep looks in action:
 
 | Awake | Almost Sleepy |
 |:---:|:---:|
-| <img src="/screenshots/StayAwake_Awake.jpeg" width="450" alt="NeverSleep - Awake" /> | <img src="/screenshots/StayAwake_Almost_Sleepy.jpeg" width="450" alt="NeverSleep - Almost Sleepy" /> |
+| <img src="/screenshots/NeverSleep_Awake.png" width="450" alt="NeverSleep - Awake" /> | <img src="/screenshots/NeverSleep_Almost_Sleepy.png" width="450" alt="NeverSleep - Almost Sleepy" /> |
 
 | Minimal Mode - Awake | Minimal Mode - Almost Sleepy |
 |:---:|:---:|
-| <img src="/screenshots/StayAwake_Minimal_Mode_Awake.jpeg" width="450" alt="NeverSleep - Minimal Mode - Awake" /> | <img src="/screenshots/StayAwake_Minimal_Mode_Almost_Sleepy.jpeg" width="450" alt="NeverSleep - Minimal Mode - Almost Sleepy" /> |
+| <img src="/screenshots/NeverSleep_Minimal_Mode_Awake.png" width="450" alt="NeverSleep - Minimal Mode - Awake" /> | <img src="/screenshots/NeverSleep_Minimal_Mode_Almost_Sleepy.png" width="450" alt="NeverSleep - Minimal Mode - Almost Sleepy" /> |
 
 ## Features
 

@@ -454,7 +454,7 @@ function handleEditNameClick() {
     }
     else {
         console.error("Cannot open edit name modal: Instance or input element not found.");
-        initializeAndMaybeShowNamePrompt(true);
+    initializeAndMaybeShowNamePrompt(!userName);
     }
 }
 // ... (The rest of the file remains the same until initializeApp)

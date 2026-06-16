@@ -1935,7 +1935,7 @@ function initializeApp() {
   applyAllWidgetVisibilities();
 
   // --- 6. Handle User Greeting & Name Prompt Initialization ---
-  initializeAndMaybeShowNamePrompt(!userName);
+  initializeAndMaybeShowNamePrompt(true);
   if (userName) {
     updateGreeting();
   }

@@ -820,7 +820,7 @@ function savePomodoroDurations() {
     var d = {
         pomodoro: POMODORO_DURATION / 60,
         shortBreak: SHORT_BREAK_DURATION / 60,
-        longBreak: LONG_BREAK_DURATION / 60
+        longBreak: LONG_BREAK_DURATION / 60,
     };
     localStorage.setItem(LSK.pomodoroDurations, JSON.stringify(d));
 }
@@ -846,11 +846,11 @@ function updatePomodoroModeButtonLabels() {
     pomodoroModeButtons.forEach(function (b) {
         var mode = b.dataset.mode;
         if (mode === "pomodoro")
-            b.textContent = "Pomodoro (" + (POMODORO_DURATION / 60) + "m)";
+            b.textContent = "Pomodoro (".concat(POMODORO_DURATION / 60, "m)");
         else if (mode === "shortBreak")
-            b.textContent = "Short Break (" + (SHORT_BREAK_DURATION / 60) + "m)";
+            b.textContent = "Short Break (".concat(SHORT_BREAK_DURATION / 60, "m)");
         else if (mode === "longBreak")
-            b.textContent = "Long Break (" + (LONG_BREAK_DURATION / 60) + "m)";
+            b.textContent = "Long Break (".concat(LONG_BREAK_DURATION / 60, "m)");
     });
 }
 function updatePomodoroModeButtonsUI() {
@@ -886,11 +886,11 @@ function playAlarmBurst() {
         if (!pomodoroAlarmAudioContext || pomodoroAlarmAudioContext.state === "closed") {
             pomodoroAlarmAudioContext = new (window.AudioContext || window.webkitAudioContext)();
         }
-        var ctx = pomodoroAlarmAudioContext;
-        if (ctx.state === "suspended") {
-            ctx.resume();
+        var ctx_1 = pomodoroAlarmAudioContext;
+        if (ctx_1.state === "suspended") {
+            ctx_1.resume();
         }
-        var now = ctx.currentTime;
+        var now_1 = ctx_1.currentTime;
         // Loud alarm pattern: alternating high-low tones, long burst
         var tones = [
             { freq: 880, start: 0, dur: 0.4 },
@@ -904,19 +904,20 @@ function playAlarmBurst() {
             { freq: 1050, start: 3.6, dur: 0.5 },
             { freq: 880, start: 4.15, dur: 0.35 },
         ];
-        tones.forEach(function (t) {
-            var osc = ctx.createOscillator();
-            var gain = ctx.createGain();
+        tones.forEach(function (_a) {
+            var freq = _a.freq, start = _a.start, dur = _a.dur;
+            var osc = ctx_1.createOscillator();
+            var gain = ctx_1.createGain();
             osc.type = "square";
-            osc.frequency.setValueAtTime(t.freq, now + t.start);
-            gain.gain.setValueAtTime(0, now + t.start);
-            gain.gain.linearRampToValueAtTime(1.0, now + t.start + 0.02);
-            gain.gain.setValueAtTime(1.0, now + t.start + t.dur - 0.02);
-            gain.gain.linearRampToValueAtTime(0, now + t.start + t.dur);
+            osc.frequency.setValueAtTime(freq, now_1 + start);
+            gain.gain.setValueAtTime(0, now_1 + start);
+            gain.gain.linearRampToValueAtTime(1.0, now_1 + start + 0.02);
+            gain.gain.setValueAtTime(1.0, now_1 + start + dur - 0.02);
+            gain.gain.linearRampToValueAtTime(0, now_1 + start + dur);
             osc.connect(gain);
-            gain.connect(ctx.destination);
-            osc.start(now + t.start);
-            osc.stop(now + t.start + t.dur);
+            gain.connect(ctx_1.destination);
+            osc.start(now_1 + start);
+            osc.stop(now_1 + start + dur);
         });
     }
     catch (err) {
@@ -1131,45 +1132,53 @@ function initializePomodoroTimer() {
         // --- Pomodoro Settings ---
         loadPomodoroDurations();
         updatePomodoroModeButtonLabels();
-        var settingsToggle = document.getElementById("pomodoro-settings-toggle");
-        var settingsPanel = document.getElementById("pomodoro-settings-panel");
-        var pomoDurInput = document.getElementById("pomodoro-duration-input");
-        var shortDurInput = document.getElementById("short-break-duration-input");
-        var longDurInput = document.getElementById("long-break-duration-input");
+        var settingsToggle_1 = document.getElementById("pomodoro-settings-toggle");
+        var settingsPanel_1 = document.getElementById("pomodoro-settings-panel");
+        var pomoDurInput_1 = document.getElementById("pomodoro-duration-input");
+        var shortDurInput_1 = document.getElementById("short-break-duration-input");
+        var longDurInput_1 = document.getElementById("long-break-duration-input");
         var saveSettingsBtn = document.getElementById("pomodoro-save-settings-btn");
-        if (settingsToggle && settingsPanel) {
-            settingsToggle.addEventListener("click", function (e) {
+        if (settingsToggle_1 && settingsPanel_1) {
+            settingsToggle_1.addEventListener("click", function (e) {
                 e.stopPropagation();
-                var isOpen = settingsPanel.style.display !== "none";
-                settingsPanel.style.display = isOpen ? "none" : "block";
-                settingsToggle.classList.toggle("active", !isOpen);
+                var isOpen = settingsPanel_1.style.display !== "none";
+                settingsPanel_1.style.display = isOpen ? "none" : "block";
+                settingsToggle_1.classList.toggle("active", !isOpen);
                 if (!isOpen) {
-                    if (pomoDurInput) pomoDurInput.value = String(POMODORO_DURATION / 60);
-                    if (shortDurInput) shortDurInput.value = String(SHORT_BREAK_DURATION / 60);
-                    if (longDurInput) longDurInput.value = String(LONG_BREAK_DURATION / 60);
+                    // Populate inputs with current values
+                    if (pomoDurInput_1)
+                        pomoDurInput_1.value = String(POMODORO_DURATION / 60);
+                    if (shortDurInput_1)
+                        shortDurInput_1.value = String(SHORT_BREAK_DURATION / 60);
+                    if (longDurInput_1)
+                        longDurInput_1.value = String(LONG_BREAK_DURATION / 60);
                 }
             });
         }
         if (saveSettingsBtn) {
             saveSettingsBtn.addEventListener("click", function () {
-                var p = Math.max(1, Math.min(120, parseInt((pomoDurInput === null || pomoDurInput === void 0 ? void 0 : pomoDurInput.value) || "25")));
-                var s = Math.max(1, Math.min(60, parseInt((shortDurInput === null || shortDurInput === void 0 ? void 0 : shortDurInput.value) || "5")));
-                var l = Math.max(1, Math.min(60, parseInt((longDurInput === null || longDurInput === void 0 ? void 0 : longDurInput.value) || "15")));
+                var p = Math.max(1, Math.min(120, parseInt((pomoDurInput_1 === null || pomoDurInput_1 === void 0 ? void 0 : pomoDurInput_1.value) || "25")));
+                var s = Math.max(1, Math.min(60, parseInt((shortDurInput_1 === null || shortDurInput_1 === void 0 ? void 0 : shortDurInput_1.value) || "5")));
+                var l = Math.max(1, Math.min(60, parseInt((longDurInput_1 === null || longDurInput_1 === void 0 ? void 0 : longDurInput_1.value) || "15")));
                 POMODORO_DURATION = p * 60;
                 SHORT_BREAK_DURATION = s * 60;
                 LONG_BREAK_DURATION = l * 60;
                 savePomodoroDurations();
                 updatePomodoroModeButtonLabels();
+                // Reset current timer to new duration
                 pomodoroTotalDuration = getDurationForMode(pomodoroMode);
                 if (!isPomodoroRunning) {
                     pomodoroRemainingTime = pomodoroTotalDuration;
                     updatePomodoroDisplay();
                 }
                 savePomodoroState();
+                // Close the settings panel
                 var panel = document.getElementById("pomodoro-settings-panel");
                 var toggle = document.getElementById("pomodoro-settings-toggle");
-                if (panel) panel.style.display = "none";
-                if (toggle) toggle.classList.remove("active");
+                if (panel)
+                    panel.style.display = "none";
+                if (toggle)
+                    toggle.classList.remove("active");
             });
         }
     }
@@ -1682,7 +1691,7 @@ function initializeApp() {
     loadAllWidgetPositions();
     applyAllWidgetVisibilities();
     // --- 6. Handle User Greeting & Name Prompt Initialization ---
-    initializeAndMaybeShowNamePrompt(!userName);
+    initializeAndMaybeShowNamePrompt(true);
     if (userName) {
         updateGreeting();
     }
